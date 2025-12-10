@@ -1,0 +1,142 @@
+You are a senior full-stack app generator. Generate a **complete mobile app called "Genspark"**, an AI-powered programming education app. The generated app should be production-ready, modular, and fully functional. Use **Flutter (Dart) or React Native**. Follow these specifications:
+
+---
+
+## 1️⃣ General Requirements
+- Cross-platform mobile (Android + iOS)
+- Modular architecture: screens, components, services separated
+- Light + Dark mode support with **Material 3 + soft-neumorphism**
+- Rounded corners, subtle shadows, smooth transitions, pull-to-refresh, swipe gestures
+- 8px spacing system
+- Responsive design for mobile devices
+- Reusable components: buttons, cards, chips, modals, code blocks, lesson blocks, loading skeletons
+- Bottom navigation bar: Home, Explore, AI, Practice, Profile
+
+---
+
+## 2️⃣ Colors
+
+### Primary / Accent
+- Primary: Electric Blue #005BFF
+- Secondary: Neon Purple #9A5BFF
+- Accent / Gold: #FFB100
+
+### Neutrals
+- Light bg: #F2F3F5, card: #FFFFFF, text primary: #212121, text secondary: #555555
+- Dark bg: #121212, card: #1E1E1E, text primary: #F2F3F5, text secondary: #AAAAAA
+- Divider: #E0E0E0 (light) / #2C2C2C (dark)
+
+### Feedback
+- Error: #FF4D4D
+- Success: #28C76F
+- Warning: #FF9F43
+- Info / Hint: #00B8D9
+
+### Code Editor
+- Dark: bg #1E1E1E, text #F8F8F2, keyword #FF79C6, string #F1FA8C, function #50FA7B, comment #6272A4
+- Light: bg #F9F9F9, text #212121, keyword #0000FF, string #A31515, function #795E26, comment #6A9955
+
+---
+
+## 3️⃣ Screens / Pages
+
+### Onboarding & Auth
+- Welcome, App intro
+- Features: 150+ programming languages, AI tutor, compiler
+- Sign up / Login
+- OTP verification / Email verification
+- Success / error states
+
+### Home Dashboard
+- Greeting, XP, streak, badges
+- Quick actions: Learn, AI Tutor, Compiler, Challenges
+- Recommended lessons, trending languages
+- Bottom nav bar
+
+### Languages
+- List with search bar, category filters, recently opened, favorites
+- Language Detail:
+  - Logo, description, difficulty, popular frameworks
+  - Lessons list
+  - Progress, certification
+  - Compiler availability
+  - AI "Ask" button
+- Fixed languages: C, C++, Java, Python, JS, HTML, CSS, SQL, Full Stack, DSA
+
+### Lesson Reader (Template)
+- Section navigator
+- Scrollable lesson text
+- Code examples (syntax-highlighted)
+- Buttons: Practice, Generate Quiz, Ask AI
+- Completion bar
+
+### AI Tutor
+- Chat interface with messages, code blocks
+- Error debugging
+- Suggestions and follow-up chips
+- Voice input optional
+- Context-aware responses
+
+### Compiler
+- Editor with language selector (fixed languages)
+- Input box, output terminal
+- Run / Stop / Clear
+- Tabs for multiple files
+
+### Quizzes & Tests
+- Quiz intro
+- Question template: MCQ, code-output, debugging
+- Timer, progress bar
+- Result, explanation, retry, share certificate
+
+### Challenges / DSA
+- List / filters / difficulty
+- Challenge detail: description, test cases, code editor
+- Submission history, leaderboard
+
+### Progress & Achievements
+- Weekly XP, streak, points
+- Badges, certificates
+- Analytics charts
+- AI-generated study plan suggestions
+
+### Profile & Settings
+- Profile: avatar, stats, enrolled courses, favorites, achievements
+- Settings: theme (light/dark/system), notifications, account, delete, privacy & terms
+
+### Utility / Modals / Error
+- Loading skeletons
+- Alerts / confirmation modals
+- Empty / error state screens
+
+---
+
+## 4️⃣ Navigation Flow
+- Bottom nav: Home, Explore, AI, Practice, Profile
+- Deep links: Language → Lesson → AI → Compiler → Quiz → Progress
+- Smooth transitions and swipe gestures where relevant
+- Reusable screen templates for lessons, quizzes, AI chat, compiler
+
+---
+
+## 5️⃣ Functionality
+- Fixed lesson content per topic
+- Users can edit code in compiler
+- AI can only suggest fixes for wrong lines and answer questions
+- Compiler executes code securely for all supported languages
+- Track progress, streaks, badges, achievements
+- Reusable components everywhere
+- All screens responsive on mobile
+- Include loading indicators, error handling, and empty states
+
+---
+
+## 6️⃣ Deliverables
+- All screens fully coded with light/dark themes
+- Components fully reusable
+- Navigation flows connected
+- Code ready to run in VS Code
+- Include mock lesson content, sample quizzes, and compiler templates for all listed languages
+- Apply all specified colors consistently
+- Include bottom nav, quick actions, and AI / compiler integration
+- Make it production-ready, ready to run, and fully functional as a **complete prototype**
