@@ -1,13 +1,10 @@
 # Multi-stage Dockerfile isn't necessary here — single stage installs deps and builds client
-FROM node:20-bullseye-slim
+## Multi-stage build
 
-# set working directory
+# Builder: install build deps and build client
+FROM node:20-bullseye-slim AS builder
 WORKDIR /app
-
-# copy package files first for caching
 COPY package.json package-lock.json* ./
-
-# install build tools required for native modules
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		build-essential \
@@ -16,21 +13,24 @@ RUN apt-get update \
 		g++ \
 		libsqlite3-dev \
 	&& rm -rf /var/lib/apt/lists/*
-
-# copy rest of repo
 COPY . .
-
-# install dependencies (including dev deps needed for build)
 RUN npm ci --no-audit --no-fund
-
-# build client
 RUN npm run build:client
 
-# copy built client into server static folder
-RUN mkdir -p server/public && cp -R dist/public/* server/public/
+# Runtime: copy only necessary artifacts and install production deps
+FROM node:20-bullseye-slim AS runner
+WORKDIR /app
+
+# copy package files and install production dependencies only
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production --no-audit --no-fund
+
+# copy server, built client and other necessary files
+COPY --from=builder /app/server ./server
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/shared ./shared
+COPY --from=builder /app/src ./src
 
 ENV NODE_ENV=production
 EXPOSE 5000
-
-# start server using tsx (installed locally)
 CMD ["npx","tsx","server/index.ts"]
