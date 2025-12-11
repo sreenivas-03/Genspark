@@ -1,5 +1,5 @@
 # Multi-stage Dockerfile isn't necessary here — single stage installs deps and builds client
-## Multi-stage build
+# Multi-stage Dockerfile
 
 # Builder: install build deps and build client
 FROM node:20-bullseye-slim AS builder
@@ -33,4 +33,6 @@ COPY --from=builder /app/src ./src
 
 ENV NODE_ENV=production
 EXPOSE 5000
+
+# start server using tsx (installed locally)
 CMD ["npx","tsx","server/index.ts"]
