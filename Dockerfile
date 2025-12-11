@@ -1,11 +1,21 @@
 # Multi-stage Dockerfile isn't necessary here — single stage installs deps and builds client
-FROM node:20-alpine
+FROM node:20-bullseye-slim
 
 # set working directory
 WORKDIR /app
 
 # copy package files first for caching
 COPY package.json package-lock.json* ./
+
+# install build tools required for native modules
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		build-essential \
+		python3 \
+		make \
+		g++ \
+		libsqlite3-dev \
+	&& rm -rf /var/lib/apt/lists/*
 
 # copy rest of repo
 COPY . .
