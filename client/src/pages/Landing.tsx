@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -50,6 +51,8 @@ const FEATURES = [
 
 export default function Landing() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [, setLocation] = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const nextSlide = () => {
     if (currentSlide < ONBOARDING_SLIDES.length - 1) {
@@ -57,9 +60,21 @@ export default function Landing() {
     }
   };
 
-  const prevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
+  const handleGetStarted = async () => {
+    setIsLoading(true);
+    try {
+      // Call the login endpoint to create a session
+      // include credentials so the session cookie is set in the browser
+      const response = await fetch("/api/login", { redirect: "follow", credentials: "same-origin" });
+      if (response.ok) {
+        // Force a full page navigation so the newly created session cookie
+        // is included on subsequent requests and the auth query picks up the user.
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,15 +124,15 @@ export default function Landing() {
 
           {currentSlide === ONBOARDING_SLIDES.length - 1 ? (
             <div className="space-y-3">
-              <a href="/api/login" className="block">
-                <Button 
-                  className="w-full h-12 text-base font-semibold"
-                  data-testid="button-get-started"
-                >
-                  Get Started
-                  <ChevronRight className="w-5 h-5 ml-2" />
-                </Button>
-              </a>
+              <Button 
+                className="w-full h-12 text-base font-semibold"
+                onClick={handleGetStarted}
+                disabled={isLoading}
+                data-testid="button-get-started"
+              >
+                {isLoading ? "Loading..." : "Get Started"}
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
               <p className="text-center text-sm text-muted-foreground">
                 By continuing, you agree to our Terms of Service
               </p>

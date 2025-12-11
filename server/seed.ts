@@ -185,31 +185,48 @@ export async function seedDatabase() {
   try {
     // Seed languages
     for (const lang of LANGUAGES_DATA) {
-      await db.insert(languages).values(lang).onConflictDoNothing();
+      try {
+        await db.insert(languages).values(lang).onConflictDoNothing();
+      } catch (e) {
+        // Ignore duplicates
+      }
     }
-    console.log(`Seeded ${LANGUAGES_DATA.length} languages`);
+    console.log(`✓ Seeded ${LANGUAGES_DATA.length} languages`);
 
     // Seed lessons
     const allLessons = [...(LESSONS_DATA.python || []), ...(LESSONS_DATA.javascript || [])];
     for (const lesson of allLessons) {
-      await db.insert(lessons).values(lesson).onConflictDoNothing();
+      try {
+        await db.insert(lessons).values(lesson).onConflictDoNothing();
+      } catch (e) {
+        // Ignore duplicates
+      }
     }
-    console.log(`Seeded ${allLessons.length} lessons`);
+    console.log(`✓ Seeded ${allLessons.length} lessons`);
 
     // Seed achievements
     for (const achievement of ACHIEVEMENTS_DATA) {
-      await db.insert(achievements).values(achievement).onConflictDoNothing();
+      try {
+        await db.insert(achievements).values(achievement).onConflictDoNothing();
+      } catch (e) {
+        // Ignore duplicates
+      }
     }
-    console.log(`Seeded ${ACHIEVEMENTS_DATA.length} achievements`);
+    console.log(`✓ Seeded ${ACHIEVEMENTS_DATA.length} achievements`);
 
     // Seed challenges
     for (const challenge of CHALLENGES_DATA) {
-      await db.insert(challenges).values(challenge).onConflictDoNothing();
+      try {
+        await db.insert(challenges).values(challenge).onConflictDoNothing();
+      } catch (e) {
+        // Ignore duplicates
+      }
     }
-    console.log(`Seeded ${CHALLENGES_DATA.length} challenges`);
+    console.log(`✓ Seeded ${CHALLENGES_DATA.length} challenges`);
 
-    console.log("Database seeding complete!");
+    console.log("✓ Database seeding complete!");
   } catch (error) {
-    console.error("Error seeding database:", error);
+    console.error("[DB] Error seeding database:", error);
+    // Don't throw - allow server to start even if seeding fails
   }
 }

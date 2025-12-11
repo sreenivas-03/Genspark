@@ -19,8 +19,8 @@ export async function registerRoutes(
   // Auth middleware
   await setupAuth(app);
   
-  // Seed database on startup
-  await seedDatabase();
+  // Seed database in background (don't wait)
+  seedDatabase().catch(err => console.error("[Routes] Seeding error:", err));
 
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
